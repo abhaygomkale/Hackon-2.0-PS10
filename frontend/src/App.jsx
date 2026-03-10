@@ -3,6 +3,9 @@ import Login from './pages/Login';
 import PatientSetupPage from './pages/PatientSetupPage';
 import PatientForm from './pages/PatientForm';
 import Triage from './pages/Triage';
+import History from './pages/History';
+import EmergencyForm from './pages/EmergencyForm';
+import WardHistory from './pages/WardHistory';
 import Settings from './pages/Settings';
 import './index.css';
 
@@ -15,7 +18,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<PatientSetupPage />} />
           <Route path="/patient-form" element={<PatientForm />} />
+          <Route path="/emergency-form" element={<EmergencyForm />} />
           <Route path="/triage" element={<Triage />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/ward-history" element={<WardHistory />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>

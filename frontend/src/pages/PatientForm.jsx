@@ -3,27 +3,27 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { HeartPulse, ArrowLeft, Activity, User, Wind, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const Input = ({ label, ...props }) => (
-  <div className="flex flex-col gap-1.5 mb-2.5">
-    <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">{label}</label>
+  <div className="flex flex-col gap-1 mb-1.5">
+    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">{label}</label>
     <input
-      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-4 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 font-medium placeholder:text-slate-400 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]"
+      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 text-sm font-medium placeholder:text-slate-400 shadow-sm"
       {...props}
     />
   </div>
 );
 
 const Select = ({ label, options, ...props }) => (
-  <div className="flex flex-col gap-1.5 mb-2.5">
-    <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">{label}</label>
+  <div className="flex flex-col gap-1 mb-1.5">
+    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">{label}</label>
     <div className="relative">
       <select
-        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-4 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 font-medium shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] appearance-none cursor-pointer"
+        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 text-sm font-medium shadow-sm appearance-none cursor-pointer"
         {...props}
       >
-        <option value="" disabled>Select {label}</option>
+        <option value="" disabled>Select</option>
         {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
       </select>
-      <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+      <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
         <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
       </div>
     </div>
@@ -77,7 +77,7 @@ export default function PatientForm() {
 
   const handleSubmit = async () => {
     if (!validateForm()) {
-      setError("Please fill all fields for all patients before continuing.");
+      setError("Please fill all fields for all patients.");
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       return;
     }
@@ -92,19 +92,15 @@ export default function PatientForm() {
 
   const steps = [
     { num: 1, label: 'Login' },
-    { num: 2, label: 'Patient Setup' },
-    { num: 3, label: 'Patient Data Entry' },
-    { num: 4, label: 'AI Results' }
+    { num: 2, label: 'Setup' },
+    { num: 3, label: 'Data Entry' },
+    { num: 4, label: 'Results' }
   ];
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-blue-50/30 font-sans animate-fadeIn pb-10">
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-blue-50/30 font-sans animate-fadeIn pb-6">
 
-      {/* Background Ornaments */}
-      <div className="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-300/10 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-indigo-300/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="pt-10 px-4 md:px-8 relative z-10">
+      <div className="pt-6 px-4 md:px-6 relative z-10 max-w-[1600px] mx-auto">
 
         {/* Progress Indicator */}
         <div className="flex justify-center items-center mb-16 w-full max-w-3xl mx-auto px-4 mt-4">
@@ -142,77 +138,69 @@ export default function PatientForm() {
           </p>
         </div>
 
-        {/* Patient Cards Grid */}
-        <div className={`grid grid-cols-1 gap-8 max-w-[1400px] mx-auto w-full mb-12 ${patients.length > 1 ? 'xl:grid-cols-2' : 'max-w-4xl'}`}>
+        {/* Patient Cards Grid - Compact but more separated & visible */}
+        <div className={`grid grid-cols-1 gap-8 md:gap-10 w-full mb-12 px-4 md:px-0 ${patients.length > 2 ? 'xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2' : patients.length === 2 ? 'md:grid-cols-2 max-w-5xl mx-auto' : 'max-w-xl mx-auto'}`}>
           {patients.map((patient, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] p-6 md:p-8 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.15)] transition-all duration-500 border border-slate-100 border-l-[6px] border-l-medical-blue relative group overflow-hidden animate-fadeIn"
+              className="bg-white rounded-xl shadow-[0_8px_30px_-10px_rgba(37,99,235,0.12)] hover:shadow-[0_20px_40px_-15px_rgba(37,99,235,0.25)] hover:-translate-y-2 transition-all duration-500 border border-slate-100 hover:border-medical-blue/30 border-t-[5px] border-t-medical-blue relative group overflow-hidden animate-fadeIn flex flex-col"
               style={{ animationDelay: `${(index + 2) * 0.1}s`, animationFillMode: 'both' }}
             >
-              {/* Decorative Card Background */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-50 to-transparent rounded-bl-full -z-10 opacity-70 group-hover:scale-110 transition-transform duration-700"></div>
+              {/* Decorative Animated Card Background */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-100/40 to-transparent rounded-bl-full pointer-events-none opacity-50 group-hover:scale-125 transition-transform duration-700 ease-out z-0"></div>
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-3">
-                  <div className="bg-blue-50 p-2.5 rounded-xl text-medical-blue group-hover:bg-medical-blue group-hover:text-white transition-colors duration-300">
-                    <User size={24} />
+              <div className="px-5 py-4 bg-slate-50/40 border-b border-slate-100/80 flex items-center justify-between relative z-10 transition-colors group-hover:bg-blue-50/30">
+                <h2 className="text-[15px] font-extrabold text-slate-800 flex items-center gap-2">
+                  <div className="bg-blue-100/50 p-1.5 rounded-lg text-medical-blue group-hover:bg-medical-blue group-hover:text-white group-hover:shadow-[0_4px_10px_rgba(37,99,235,0.3)] transition-all duration-300">
+                    <User size={18} />
                   </div>
-                  Patient {index + 1} Details
+                  Patient {index + 1}
                 </h2>
-                <div className="text-sm font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
-                  ID: #{1000 + index}
+                <div className="text-[10px] items-center flex font-bold text-slate-400 bg-white px-2.5 py-1 rounded-full border border-slate-200 group-hover:border-medical-blue/20 group-hover:text-medical-blue transition-colors">
+                  #{1000 + index}
                 </div>
               </div>
 
-              <div className="space-y-8">
+              <div className="p-5 flex-1 space-y-5 relative z-10">
                 {/* Basic Information */}
-                <div>
-                  <h3 className="text-[0.8rem] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                    <span className="w-6 h-[1px] bg-slate-200"></span>
-                    Basic Information
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-3">
-                    <div className="md:col-span-2">
-                      <Input label="Full Name" type="text" placeholder="John Doe" value={patient.name} onChange={(e) => handleInputChange(index, 'name', e.target.value)} />
-                    </div>
-                    <Input label="Age" type="number" placeholder="Years" min="0" max="120" value={patient.age} onChange={(e) => handleInputChange(index, 'age', e.target.value)} />
-                    <div className="md:col-span-3">
-                      <Select label="Gender" options={['Male', 'Female', 'Other']} value={patient.gender} onChange={(e) => handleInputChange(index, 'gender', e.target.value)} />
-                    </div>
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                  <div className="col-span-2">
+                    <Input label="Full Name" type="text" placeholder="John Doe" value={patient.name} onChange={(e) => handleInputChange(index, 'name', e.target.value)} />
                   </div>
+                  <Input label="Age(y)" type="number" placeholder="Y" min="0" max="120" value={patient.age} onChange={(e) => handleInputChange(index, 'age', e.target.value)} />
+                  <Select label="Gender" options={['Male', 'Female', 'Other']} value={patient.gender} onChange={(e) => handleInputChange(index, 'gender', e.target.value)} />
                 </div>
 
-                {/* Vital Signs */}
-                <div className="bg-slate-50/50 p-5 rounded-xl border border-slate-100/80 group-hover:bg-blue-50/30 transition-colors duration-500">
-                  <h3 className="text-[0.8rem] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-4">
-                    <Activity size={16} className="text-emergency-red" />
+                {/* Vital Signs in smaller box */}
+                <div className="bg-slate-50/70 p-3 rounded-lg border border-slate-100/80">
+                  <h3 className="text-[9px] font-bold text-emergency-red uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                    <Activity size={12} />
                     Vital Signs
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3">
-                    <Input label="Oxygen Level (%)" type="number" placeholder="SpO2 (e.g. 98)" min="0" max="100" value={patient.oxygen} onChange={(e) => handleInputChange(index, 'oxygen', e.target.value)} />
-                    <Input label="Heart Rate (bpm)" type="number" placeholder="HR (e.g. 75)" min="0" max="300" value={patient.heart_rate} onChange={(e) => handleInputChange(index, 'heart_rate', e.target.value)} />
-                    <Input label="BP Systolic" type="number" placeholder="mmHg (e.g. 120)" min="0" max="300" value={patient.blood_pressure_sys} onChange={(e) => handleInputChange(index, 'blood_pressure_sys', e.target.value)} />
-                    <Input label="BP Diastolic" type="number" placeholder="mmHg (e.g. 80)" min="0" max="200" value={patient.blood_pressure_dia} onChange={(e) => handleInputChange(index, 'blood_pressure_dia', e.target.value)} />
-                    <div className="sm:col-span-2">
-                      <Input label="Temperature (°C)" type="number" step="0.1" placeholder="Temp (e.g. 37.0)" value={patient.temperature} onChange={(e) => handleInputChange(index, 'temperature', e.target.value)} />
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                    <Input label="SpO2 (%)" type="number" placeholder="98" min="0" max="100" value={patient.oxygen} onChange={(e) => handleInputChange(index, 'oxygen', e.target.value)} />
+                    <Input label="HR (bpm)" type="number" placeholder="75" min="0" max="300" value={patient.heart_rate} onChange={(e) => handleInputChange(index, 'heart_rate', e.target.value)} />
+                    <Input label="BP Sys" type="number" placeholder="120" min="0" max="300" value={patient.blood_pressure_sys} onChange={(e) => handleInputChange(index, 'blood_pressure_sys', e.target.value)} />
+                    <Input label="BP Dia" type="number" placeholder="80" min="0" max="200" value={patient.blood_pressure_dia} onChange={(e) => handleInputChange(index, 'blood_pressure_dia', e.target.value)} />
+                    <div className="col-span-2">
+                      <Input label="Temp (°C)" type="number" step="0.1" placeholder="37.0" value={patient.temperature} onChange={(e) => handleInputChange(index, 'temperature', e.target.value)} />
                     </div>
                   </div>
                 </div>
 
                 {/* Patient Condition */}
                 <div>
-                  <h3 className="text-[0.8rem] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-4">
-                    <Wind size={16} className="text-medical-blue animate-[pulse_3s_ease-in-out_infinite]" />
-                    Patient Condition
+                  <h3 className="text-[9px] font-bold text-medical-blue uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                    <Wind size={12} />
+                    Status
                   </h3>
-                  <Select label="Consciousness Level" options={['Alert', 'Drowsy', 'Unconscious']} value={patient.consciousness} onChange={(e) => handleInputChange(index, 'consciousness', e.target.value)} />
-                  <div className="flex flex-col gap-1.5 mt-4">
-                    <label className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Symptoms & Notes</label>
+                  <Select label="Consciousness" options={['Alert', 'Drowsy', 'Unconscious']} value={patient.consciousness} onChange={(e) => handleInputChange(index, 'consciousness', e.target.value)} />
+                  <div className="flex flex-col gap-1 mt-1">
+                    <label className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Symptoms</label>
                     <textarea
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-4 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 font-medium placeholder:text-slate-400 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] resize-none"
-                      rows="3"
-                      placeholder="Describe symptoms such as chest pain, breathing difficulty, dizziness etc."
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:border-medical-blue focus:ring-2 focus:ring-medical-blue/20 transition-all bg-slate-50 focus:bg-white text-slate-800 text-sm font-medium placeholder:text-slate-400 shadow-sm resize-none"
+                      rows="2"
+                      placeholder="Chest pain, dizziness..."
                       value={patient.symptom}
                       onChange={(e) => handleInputChange(index, 'symptom', e.target.value)}
                     ></textarea>
@@ -225,42 +213,39 @@ export default function PatientForm() {
 
         {/* Error message */}
         {error && (
-          <div className="flex justify-center mb-8 px-4">
-            <div className="bg-red-50 text-emergency-red px-6 py-4 rounded-xl flex items-center gap-3 border border-red-100 font-bold shadow-sm animate-fadeIn max-w-2xl w-full">
-              <AlertTriangle size={24} className="shrink-0" />
+          <div className="flex justify-center mb-6 px-4">
+            <div className="bg-red-50 text-emergency-red px-5 py-3 rounded-lg flex items-center gap-2 border border-red-100 font-bold shadow-sm animate-fadeIn max-w-xl w-full text-sm">
+              <AlertTriangle size={18} className="shrink-0" />
               <span>{error}</span>
             </div>
           </div>
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pb-20 px-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-10 px-4">
           <button
             onClick={() => navigate(-1)}
             disabled={isLoading}
-            className="flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-slate-600 bg-white border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 w-full sm:w-auto hover:shadow-sm disabled:opacity-50"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all duration-300 text-sm hover:shadow-sm disabled:opacity-50"
           >
-            <ArrowLeft size={20} />
-            Back to Setup
+            <ArrowLeft size={16} />
+            Back
           </button>
 
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className="relative group flex items-center justify-center gap-3 px-10 py-4 rounded-full font-bold text-white bg-gradient-to-r from-medical-blue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-[0_10px_25px_-8px_rgba(37,99,235,0.6)] hover:shadow-[0_15px_30px_-8px_rgba(37,99,235,0.7)] transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-90 disabled:hover:scale-100 disabled:cursor-wait overflow-hidden w-full sm:w-auto sm:min-w-[280px]"
+            className="flex items-center justify-center gap-2 px-8 py-3 rounded-full font-bold text-white bg-gradient-to-r from-medical-blue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 shadow-md hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-90 disabled:hover:scale-100 text-sm sm:min-w-[200px]"
           >
-            <div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shine_1.5s_ease-in-out]"></div>
             {isLoading ? (
               <>
-                <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
-                <span className="tracking-wide">Analyzing Patient Data...</span>
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span>Analyzing Data...</span>
               </>
             ) : (
               <>
-                <span className="tracking-wide">Analyze with AI</span>
-                <div className="bg-white/20 p-1 rounded-full group-hover:scale-110 transition-transform">
-                  <Activity size={18} className="group-hover:animate-pulse" />
-                </div>
+                <span>Analyze with AI</span>
+                <Activity size={16} className="animate-pulse" />
               </>
             )}
           </button>
