@@ -9,7 +9,7 @@ CORS(app) # Enable CORS for all routes
 def calculate_risk_score(patient):
     """
     Very strong and accurate logic for Medical Triage based on clinical rules.
-    """
+    ."""
     score = 0
     try:
         # Vitals parsing
